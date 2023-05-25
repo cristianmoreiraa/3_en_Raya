@@ -1,6 +1,7 @@
-import vista.*;
-import controler.*;
-import modelo.*;
+import ventana.Register;
+import controler.controlerGame;
+import modelo.Juego;
+import vista.Game;
 
 public class Main {
 
@@ -11,5 +12,6 @@ public class Main {
         controlerGame controler = new controlerGame( vista , modelo );
         controler.iniciar_vista();
         vista.setVisible(true);
+
     }
 }
