@@ -1,4 +1,3 @@
-import ventana.Register;
 import controler.controlerGame;
 import modelo.Juego;
 import vista.Game;
