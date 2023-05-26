@@ -4,13 +4,23 @@
  */
 package ventana;
 
+import Conexion.Conectar;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  *
  * @author crist
  */
-public class Register extends javax.swing.JFrame {
+public class Register extends javax.swing.JFrame  {
+
+    Conectar con1 = new Conectar();
+    Connection conet;
+    PreparedStatement ps;
 
     /**
      * Creates new form Crear
@@ -98,15 +108,59 @@ public class Register extends javax.swing.JFrame {
     }
 
     private void bAñadirNuevoActionPerformed(java.awt.event.ActionEvent evt) {
+        Leaderboard obj = new Leaderboard();
+            obj.getjTable1();
+        Object[] fila = {tNombre.getText()};
+        DefaultTableModel model = (DefaultTableModel) obj.getjTable1().getModel();
+            model.addRow(fila);
+
+        String nombre = tNombre.getText();
+        try {
+            if (nombre.equals("") ){
+                JOptionPane.showMessageDialog(null, "Faltan añadir datos");
+            }else{
+                Conectar obj2 = new Conectar();
+                String sql = "INSERT INTO tres_en_raya.casino(Nombre,Win,Lose) VALUES (?,?,?)";
+                conet = con1.establecerConexion1();
+                ps.setString(1,tNombre.getText());
+                ps.setString(2,"0");
+                ps.setString(3,"0");
+                Statement st = obj2.establecerConexion1().createStatement();
+                st.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Los datos han sido subidos correctamente a la base de datos");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha fallado al subirse los datos");
+        }
+    /*
+        Object[] fila = {tNombre.getText()};
+        Leaderboard obj =  new Leaderboard();
+            obj.getjTable1();
+        DefaultTableModel model = (DefaultTableModel) obj.getjTable1().getModel();
+                model.addRow(fila);
+
+        java.sql.Connection conectar = null;
+
+        try {
+            Conectar obj1 = new Conectar();
+            conet = obj1.establecerConexion1();
+            ps = conectar.prepareStatement("INSERT INTO tres_en_raya.casino(Nombre,Win,Lose) VALUES (?,0,0)");
+            ps.setString(1,tNombre.getText());
+            ps.execute();
+            JOptionPane.showMessageDialog(null, "FILA INSERTADA CON EXITO");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         setVisible(false);
-        Leaderboard siguienteVentana = new Leaderboard();
-        siguienteVentana.setVisible(true);
+        //  Leaderboard siguienteVentana = new Leaderboard();
+        //siguienteVentana.setVisible(true);
         JOptionPane.showMessageDialog(null,"Escoge el nombre de los jugadores");
         dispose();
 
         /**
          * Hacer que se actualice la tabla
          */
+
     }
 
     /**

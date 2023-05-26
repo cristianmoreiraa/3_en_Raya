@@ -4,9 +4,16 @@
  */
 package ventana;
 
+import Conexion.Conectar;
 import controler.controlerGame;
 import modelo.Juego;
 import vista.Game;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+
+import static javax.swing.JOptionPane.*;
 
 
 /**
@@ -14,6 +21,14 @@ import vista.Game;
  * @author crist
  */
 public class Leaderboard extends javax.swing.JFrame {
+    Conectar con1 = new Conectar();
+    Connection conet;
+    PreparedStatement ps;
+
+
+    public JTable getjTable1() {
+        return jTable1;
+    }
 
     /**
      * Creates new form Leaderboard
@@ -146,11 +161,45 @@ public class Leaderboard extends javax.swing.JFrame {
     }
 
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        Conectar con = new Conectar();
+            con.establecerConexion();
     }
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        try {
+            Conectar obj = new Conectar();
+            conet = obj.establecerConexion();
+            // Obtener los datos de la tabla
+            String sql = "SELECT * FROM tres_en_raya.casino" ;
+            Statement statement = conet.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Crear el modelo de la tabla
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // Obtener metadatos de la consulta
+            int columnCount = resultSet.getMetaData().getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                tableModel.addColumn(resultSet.getMetaData().getColumnLabel(i));
+            }
+
+            // Agregar filas a la tabla con los datos de la consulta
+            while (resultSet.next()) {
+                Object[] row = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    row[i - 1] = resultSet.getObject(i);
+                }
+                tableModel.addRow(row);
+            }
+
+            showMessageDialog(null, "Se ha actualizado la tabla");
+
+            // Asignar el modelo a la tabla
+            jTable1.setModel(tableModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showMessageDialog(null, "Error al mostrar los datos de la tabla");
+        }
     }
 
     private void bJugarActionPerformed(java.awt.event.ActionEvent evt) {
