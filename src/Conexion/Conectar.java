@@ -13,7 +13,7 @@ public class Conectar {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/tres_en_raya", "root", "");
             JOptionPane.showMessageDialog(null,"Se ha conectado correctamente");
-            //System.out.println("Conectado corretamente ");
+            System.out.println("Conectado corretamente ");
 
 
         } catch (Exception e) {

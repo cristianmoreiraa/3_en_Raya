@@ -163,6 +163,7 @@ public class Leaderboard extends javax.swing.JFrame {
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {
         Conectar con = new Conectar();
             con.establecerConexion();
+
     }
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {
