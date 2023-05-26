@@ -4,6 +4,8 @@
  */
 package ventana;
 
+import javax.swing.*;
+
 /**
  *
  * @author crist
@@ -96,7 +98,15 @@ public class Register extends javax.swing.JFrame {
     }
 
     private void bAñadirNuevoActionPerformed(java.awt.event.ActionEvent evt) {
-        System.out.println("Este es el mensaje: "+tNombre.getText()); //recoge lo que escribimos en el TextField y lo muestra por consola
+        setVisible(false);
+        Leaderboard siguienteVentana = new Leaderboard();
+        siguienteVentana.setVisible(true);
+        JOptionPane.showMessageDialog(null,"Escoge el nombre de los jugadores");
+        dispose();
+
+        /**
+         * Hacer que se actualice la tabla
+         */
     }
 
     /**
