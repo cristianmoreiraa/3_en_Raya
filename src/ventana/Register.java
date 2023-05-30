@@ -8,10 +8,7 @@ import Conexion.Conectar;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static javax.swing.DropMode.INSERT;
 
@@ -140,10 +137,13 @@ public class Register extends javax.swing.JFrame  {
                 ps = conet.prepareStatement("INSERT INTO casino(Nombre, Win, Lose) VALUES (?,0,0)");
                 ps.setString(1, tNombre.getText());
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Todo ok");
+                JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+                Leaderboard obj1 = new Leaderboard();
+                    obj1.setVisible(true);
+                    dispose();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Algo falló");
+            JOptionPane.showMessageDialog(null, "Algo ha fallado");
         }
 
     }
