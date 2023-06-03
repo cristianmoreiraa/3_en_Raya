@@ -4,6 +4,8 @@
  */
 package ventana;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import Conexion.Conectar;
 import controler.controlerGame;
 import modelo.Juego;
@@ -24,6 +26,7 @@ public class Leaderboard extends javax.swing.JFrame {
     Conectar con1 = new Conectar();
     Connection conet;
     PreparedStatement ps;
+
 
 
     public JTable getjTable1() {
@@ -162,14 +165,16 @@ public class Leaderboard extends javax.swing.JFrame {
 
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {
         Conectar con = new Conectar();
-            con.establecerConexion();
+            //con.establecerConexion();     Conexion Cristian
+            con.establecerConexionJorge();
 
     }
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Conectar obj = new Conectar();
-            conet = obj.establecerConexion();
+            conet = obj.establecerConexionJorge();
+            //conet = obj.establecerConexion(); Conexion Cristian
             // Obtener los datos de la tabla
             String sql = "SELECT * FROM tres_en_raya.casino" ;
             Statement statement = conet.createStatement();
@@ -218,7 +223,35 @@ public class Leaderboard extends javax.swing.JFrame {
     }
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        // Agrega un MouseAdapter a la tabla para detectar clics en las filas
+        jTable1.addMouseListener(new MouseAdapter() {
+            private String jugador1 = null;
+            private String jugador2 = null;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaSeleccionada = jTable1.getSelectedRow();
+
+                // Obtén el nombre del jugador de la fila seleccionada
+                String nombreJugador = (String) jTable1.getValueAt(filaSeleccionada, 0);
+
+                if (jugador1 == null) {
+                    // Si aún no se ha seleccionado un jugador 1, almacena el nombre en jugador1
+                    jugador1 = nombreJugador;
+                } else if (jugador2 == null) {
+                    // Si ya se seleccionó un jugador 1 pero no un jugador 2, almacena el nombre en jugador2
+                    jugador2 = nombreJugador;
+
+                    // Realiza alguna acción con los nombres de los jugadores
+                    //System.out.println("Jugador 1: " + jugador1);
+                    //System.out.println("Jugador 2: " + jugador2);
+
+                    // Reinicia las variables para futuras selecciones
+                    jugador1 = null;
+                    jugador2 = null;
+                }
+            }
+        });
     }
 
     /**

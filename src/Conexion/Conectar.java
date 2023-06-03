@@ -31,4 +31,20 @@ public class Conectar {
         }
         return conectar;
     }
+
+    public Connection establecerConexionJorge(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/baseprog", "root", "Usatorre1210");
+            System.out.println("Conectado corretamente ");
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se conecto a la base correctamente"+e.toString());
+        }
+
+        return conectar;
+    }
+
 }
+

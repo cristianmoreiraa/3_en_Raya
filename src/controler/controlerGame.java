@@ -1,8 +1,15 @@
 package controler;
+import Conexion.Conectar;
 import modelo.Juego;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.*;
+
+import ventana.Register;
 import vista.*;
 
 public class controlerGame implements ActionListener {
@@ -10,6 +17,9 @@ public class controlerGame implements ActionListener {
     private Game vista;
     private Juego juego;
     private String titulo = "3 en Raya MVC * jc-mouse.net ";
+    Conectar con1 = new Conectar();
+    Connection conet;
+    PreparedStatement ps;
 
     //En el constructor inicializamos nuestros objetos
     public controlerGame( Game vista , Juego modelo){
@@ -74,19 +84,110 @@ public class controlerGame implements ActionListener {
             mensaje(" 'Es un empate' ");
     }
 
-    //dependiendo de la respuesta del modelo, se muestra un mensaje al usuario
+
+
+
     private void mensaje(String s)
     {
-        int seleccion = JOptionPane.showOptionDialog(null,"Gano el jugador " + s + "\n ¿Que desea hacer?", "Fin del juego",
+        boolean jugadorEncontradoGanador = false;
+        while (!jugadorEncontradoGanador) {
+            String nombreGanador = JOptionPane.showInputDialog(null, "Nombre del jugador que ganó");
+            try {
+                // Verifica si el jugador existe
+                conet = con1.establecerConexionJorge();
+                ps = conet.prepareStatement("SELECT Nombre FROM tres_en_raya.casino WHERE Nombre = ?");
+                ps.setString(1, nombreGanador);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    // El jugador existe, actualiza el registro del ganador
+                    ps = conet.prepareStatement("UPDATE tres_en_raya.casino SET Win = Win + 1 WHERE Nombre = ?");
+                    ps.setString(1, nombreGanador);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Resultados actualizados correctamente");
+                    jugadorEncontradoGanador = true;
+                } else {
+                    // El jugador no existe
+                    int opcion = JOptionPane.showOptionDialog(null, "El jugador no existe. ¿Deseas registrarlo?", "Jugador no encontrado", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        // Registrar nuevo jugador
+                        ps = conet.prepareStatement("INSERT INTO tres_en_raya.casino(Nombre, Win, Lose) VALUES (?, 0, 0)");
+                        ps.setString(1, nombreGanador);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Jugador registrado correctamente");
+
+                        ps = conet.prepareStatement("UPDATE tres_en_raya.casino SET Win = Win + 1 WHERE Nombre = ?");
+                        ps.setString(1, nombreGanador);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Resultados actualizados correctamente");
+
+                        jugadorEncontradoGanador = true;
+                    }
+                    else{
+                        jugadorEncontradoGanador = false;
+                    }
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar los resultados");
+            }
+        }
+
+
+
+        boolean jugadorEncontradoPerdedor = false;
+        while (!jugadorEncontradoPerdedor) {
+            String nombrePerdedor = JOptionPane.showInputDialog(null, "Nombre del jugador que perdió");
+            try {
+
+                conet = con1.establecerConexionJorge();
+                ps = conet.prepareStatement("SELECT Nombre FROM tres_en_raya.casino WHERE Nombre = ?");
+                ps.setString(1, nombrePerdedor);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+
+                    ps = conet.prepareStatement("UPDATE tres_en_raya.casino SET Lose = Lose + 1 WHERE Nombre = ?");
+                    ps.setString(1, nombrePerdedor);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Resultados actualizados correctamente");
+                    jugadorEncontradoPerdedor = true;
+                } else {
+
+                    int opcion = JOptionPane.showOptionDialog(null, "El jugador no existe. ¿Deseas registrarlo?", "Jugador no encontrado", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if (opcion == JOptionPane.YES_OPTION) {
+
+                        ps = conet.prepareStatement("INSERT INTO tres_en_raya.casino(Nombre, Win, Lose) VALUES (?, 0, 0)");
+                        ps.setString(1, nombrePerdedor);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Jugador registrado correctamente");
+
+                        ps = conet.prepareStatement("UPDATE tres_en_raya.casino SET Lose = Lose + 1 WHERE Nombre = ?");
+                        ps.setString(1, nombrePerdedor);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Resultados actualizados correctamente");
+
+                        jugadorEncontradoPerdedor = true;
+                    }
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar los resultados");
+            }
+        }
+
+        int seleccion = JOptionPane.showOptionDialog(null," ¿Que desea hacer?", "Fin del juego",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,    // null para icono por defecto.
                 new Object[] { " Jugar otra vez ", " Salir de Programa " },
                 "Jugar otra vez");
 
+
+
         if (seleccion != -1)
             if( (seleccion+1)==1 )
             {
+
                 this.juego.Jugar_otra_vez();
                 this.vista.setTitle(titulo);
                 this.vista.casilla1.setText( "" );

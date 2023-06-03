@@ -12,7 +12,8 @@ import java.sql.*;
 
 import static javax.swing.DropMode.INSERT;
 
-/**
+/**+
+ * 6
  *
  * @author crist
  */
@@ -108,27 +109,10 @@ public class Register extends javax.swing.JFrame  {
     }
 
     private void bAñadirNuevoActionPerformed(java.awt.event.ActionEvent evt) {
+       //Conexion Cristian
+    /*
         String nombre = tNombre.getText();
-/*
-        try{
-            if (tNombre.equals("")){
-                JOptionPane.showMessageDialog(null,"Falta introducir datos.");
-            }else{
-                Conectar obj = new Conectar();
 
-                ps = conet.prepareStatement("INSERT INTO casino(Nombre, Win, Lose) VALUES (?,0,0)");
-                ps.setString(1,tNombre.getText());
-                ps.executeUpdate();
-               // String sql = "INSERT INTO casino(Nombre, Win, Lose) VALUES (?,?,?)";
-                conet = con1.establecerConexion1();
-                Statement st = obj.establecerConexion1().createStatement();
-                //st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null,"Todo ok");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"algo falló");
-        }
-*/
         try {
             if (tNombre.equals("")) {
                 JOptionPane.showMessageDialog(null, "Falta introducir datos.");
@@ -139,12 +123,34 @@ public class Register extends javax.swing.JFrame  {
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
                 Leaderboard obj1 = new Leaderboard();
+                obj1.setVisible(true);
+                dispose();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Algo ha fallado");
+        }
+    */
+
+       //Conexion Jorge
+        String nombre = tNombre.getText();
+
+        try {
+            if (tNombre.equals("")) {
+                JOptionPane.showMessageDialog(null, "Falta introducir datos.");
+            } else {
+                conet = con1.establecerConexionJorge();
+                ps = conet.prepareStatement("INSERT INTO tres_en_raya.casino(Nombre, Win, Lose) VALUES (?,0,0)");
+                ps.setString(1, tNombre.getText());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+                Leaderboard obj1 = new Leaderboard();
                     obj1.setVisible(true);
                     dispose();
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Algo ha fallado");
         }
+
 
     }
 
