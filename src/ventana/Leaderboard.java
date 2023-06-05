@@ -165,16 +165,16 @@ public class Leaderboard extends javax.swing.JFrame {
 
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {
         Conectar con = new Conectar();
-            //con.establecerConexion();     Conexion Cristian
-            con.establecerConexionJorge();
+            con.establecerConexion();
+            //con.establecerConexionJorge();
 
     }
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Conectar obj = new Conectar();
-            conet = obj.establecerConexionJorge();
-            //conet = obj.establecerConexion(); Conexion Cristian
+            //conet = obj.establecerConexionJorge();
+            conet = obj.establecerConexion1();
             // Obtener los datos de la tabla
             String sql = "SELECT * FROM tres_en_raya.casino" ;
             Statement statement = conet.createStatement();
@@ -215,6 +215,7 @@ public class Leaderboard extends javax.swing.JFrame {
         controlerGame controler = new controlerGame( vista , modelo );
         controler.iniciar_vista();
         vista.setVisible(true);
+
         dispose();
     }
 

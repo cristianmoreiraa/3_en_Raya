@@ -105,42 +105,22 @@ public class Register extends javax.swing.JFrame  {
     }
 
     private void bExitActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(3);
+        Leaderboard obj = new Leaderboard();
+        obj.setVisible(true);
+        dispose();
     }
 
     private void bAñadirNuevoActionPerformed(java.awt.event.ActionEvent evt) {
-       //Conexion Cristian
-    /*
         String nombre = tNombre.getText();
 
         try {
             if (tNombre.equals("")) {
                 JOptionPane.showMessageDialog(null, "Falta introducir datos.");
             } else {
-                conet = con1.establecerConexion1();
-                ps = conet.prepareStatement("INSERT INTO casino(Nombre, Win, Lose) VALUES (?,0,0)");
-                ps.setString(1, tNombre.getText());
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
-                Leaderboard obj1 = new Leaderboard();
-                obj1.setVisible(true);
-                dispose();
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Algo ha fallado");
-        }
-    */
-
-       //Conexion Jorge
-        String nombre = tNombre.getText();
-
-        try {
-            if (tNombre.equals("")) {
-                JOptionPane.showMessageDialog(null, "Falta introducir datos.");
-            } else {
-                conet = con1.establecerConexionJorge();
+                //conet = con1.establecerConexionJorge();
+                conet =  con1.establecerConexion1();
                 ps = conet.prepareStatement("INSERT INTO tres_en_raya.casino(Nombre, Win, Lose) VALUES (?,0,0)");
-                ps.setString(1, tNombre.getText());
+                ps.setString(1, nombre);
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
                 Leaderboard obj1 = new Leaderboard();
@@ -148,7 +128,7 @@ public class Register extends javax.swing.JFrame  {
                     dispose();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Algo ha fallado");
+            JOptionPane.showMessageDialog(null, "Algo ha fallado o ya existe ese usuario");
         }
 
 

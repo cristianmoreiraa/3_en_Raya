@@ -17,7 +17,7 @@ public class Conectar {
 
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se conecto a la base correctamente, espabila");
+            JOptionPane.showMessageDialog(null, "No se conecto a la base correctamente" +e.getMessage());
         }
 
         return conectar;
@@ -27,7 +27,7 @@ public class Conectar {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/tres_en_raya", "root", "");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se conecto a la base correctamente, espabila");
+            JOptionPane.showMessageDialog(null, "No se conecto a la base correctamente");
         }
         return conectar;
     }

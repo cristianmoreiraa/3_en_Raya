@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 
+import ventana.Leaderboard;
 import ventana.Register;
 import vista.*;
 
@@ -20,6 +21,8 @@ public class controlerGame implements ActionListener {
     Conectar con1 = new Conectar();
     Connection conet;
     PreparedStatement ps;
+    Leaderboard obj = new Leaderboard();
+
 
     //En el constructor inicializamos nuestros objetos
     public controlerGame( Game vista , Juego modelo){
@@ -82,19 +85,20 @@ public class controlerGame implements ActionListener {
             mensaje(" 'O' ");
         else if( this.juego.ganador()== 3 )
             mensaje(" 'Es un empate' ");
+
+
     }
 
 
 
 
-    private void mensaje(String s)
-    {
+    private void mensaje(String s) {
         boolean jugadorEncontradoGanador = false;
         while (!jugadorEncontradoGanador) {
             String nombreGanador = JOptionPane.showInputDialog(null, "Nombre del jugador que ganó");
             try {
                 // Verifica si el jugador existe
-                conet = con1.establecerConexionJorge();
+                conet = con1.establecerConexion1();
                 ps = conet.prepareStatement("SELECT Nombre FROM tres_en_raya.casino WHERE Nombre = ?");
                 ps.setString(1, nombreGanador);
                 ResultSet rs = ps.executeQuery();
@@ -122,8 +126,7 @@ public class controlerGame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Resultados actualizados correctamente");
 
                         jugadorEncontradoGanador = true;
-                    }
-                    else{
+                    } else {
                         jugadorEncontradoGanador = false;
                     }
                 }
@@ -133,13 +136,12 @@ public class controlerGame implements ActionListener {
         }
 
 
-
         boolean jugadorEncontradoPerdedor = false;
         while (!jugadorEncontradoPerdedor) {
             String nombrePerdedor = JOptionPane.showInputDialog(null, "Nombre del jugador que perdió");
             try {
 
-                conet = con1.establecerConexionJorge();
+                conet = con1.establecerConexion1();
                 ps = conet.prepareStatement("SELECT Nombre FROM tres_en_raya.casino WHERE Nombre = ?");
                 ps.setString(1, nombrePerdedor);
                 ResultSet rs = ps.executeQuery();
@@ -175,32 +177,32 @@ public class controlerGame implements ActionListener {
             }
         }
 
-        int seleccion = JOptionPane.showOptionDialog(null," ¿Que desea hacer?", "Fin del juego",
+        int seleccion = JOptionPane.showOptionDialog(null, " ¿Que desea hacer?", "Fin del juego",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,    // null para icono por defecto.
-                new Object[] { " Jugar otra vez ", " Salir de Programa " },
+                new Object[]{" Jugar otra vez ", " Salir de Programa "},
                 "Jugar otra vez");
 
 
-
         if (seleccion != -1)
-            if( (seleccion+1)==1 )
-            {
-
+            if ((seleccion + 1) == 1) {
                 this.juego.Jugar_otra_vez();
                 this.vista.setTitle(titulo);
-                this.vista.casilla1.setText( "" );
-                this.vista.casilla2.setText( "" );
-                this.vista.casilla3.setText( "" );
-                this.vista.casilla4.setText( "" );
-                this.vista.casilla5.setText( "" );
-                this.vista.casilla6.setText( "" );
-                this.vista.casilla7.setText( "" );
-                this.vista.casilla8.setText( "" );
-                this.vista.casilla9.setText( "" );
+                this.vista.casilla1.setText("");
+                this.vista.casilla2.setText("");
+                this.vista.casilla3.setText("");
+                this.vista.casilla4.setText("");
+                this.vista.casilla5.setText("");
+                this.vista.casilla6.setText("");
+                this.vista.casilla7.setText("");
+                this.vista.casilla8.setText("");
+                this.vista.casilla9.setText("");
+
+            } else {
+                obj.setVisible(true);
+                 vista.dispose();
+                //System.exit(0);
             }
-            else
-                System.exit(0);
     }
 }
