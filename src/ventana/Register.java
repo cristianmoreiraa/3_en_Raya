@@ -104,12 +104,22 @@ public class Register extends javax.swing.JFrame  {
          */
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Exit".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bExitActionPerformed(java.awt.event.ActionEvent evt) {
         Leaderboard obj = new Leaderboard();
         obj.setVisible(true);
         dispose();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Añadir Nuevo".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bAñadirNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         String nombre = tNombre.getText();
 

@@ -155,6 +155,11 @@ public class Leaderboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Register".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bRegisterActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         Register siguienteVentana = new Register();
@@ -163,6 +168,11 @@ public class Leaderboard extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Conectar".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {
         Conectar con = new Conectar();
             con.establecerConexion();
@@ -170,6 +180,11 @@ public class Leaderboard extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Actualizar".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Conectar obj = new Conectar();
@@ -208,6 +223,11 @@ public class Leaderboard extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Jugar".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bJugarActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         Juego modelo = new Juego();
@@ -219,10 +239,20 @@ public class Leaderboard extends javax.swing.JFrame {
         dispose();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Exit".
+     *
+     * @param evt El evento de acción generado por el botón.
+     */
     private void bExitActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(3);
     }
 
+    /**
+     * Método que se ejecuta al presionar el ratón sobre la tabla jTable1.
+     *
+     * @param evt El evento de ratón generado por la tabla.
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {
         // Agrega un MouseAdapter a la tabla para detectar clics en las filas
         jTable1.addMouseListener(new MouseAdapter() {
