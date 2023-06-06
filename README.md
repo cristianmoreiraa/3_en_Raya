@@ -93,4 +93,5 @@ Game->>+Game: casilla1ActionPerformed()
     Juego->>-controlerGame: Juego reiniciado
     controlerGame->>-Game: Juego reiniciado
     Game->>-Leaderboard: Juego reiniciado
+
 ```
