@@ -1,20 +1,77 @@
 # Proyecto  3 en Raya
 
+---
+# Diagrama de Flujo
 
-¡Hola a todos!
+```mermaid
+classDiagram
+    class Leaderboard {
+        +setVisible(boolean): void
+    }
+    class Game {
+        +casilla1: JButton
+        +casilla2: JButton
+        +casilla3: JButton
+        +casilla4: JButton
+        +casilla5: JButton
+        +casilla6: JButton
+        +casilla7: JButton
+        +casilla8: JButton
+        +casilla9: JButton
+    }
+    class Juego {
+        +realizarMovimiento(int, int): boolean
+        +verificarGanador(): boolean
+    }
+    class controlerGame {
+        +marcarCasilla(JButton): void
+        +reiniciarJuego(): void
+    }
 
-Somos Jorge Usatorre y Cristian Moreira, dos entusiastas estudiantes de DAM1 (Desarrollo de Aplicaciones Multiplataforma). Estamos emocionados de anunciar que nos hemos embarcado en un emocionante proyecto: el desarrollo del juego "3 en Raya" utilizando el lenguaje Java y aplicando el patrón MVC (Modelo-Vista-Controlador).
+    Leaderboard --> Game
+    Game --> Juego
+    controlerGame --> Game
+    controlerGame --> Juego
+```
 
-El juego "3 en Raya" es un clásico que muchos de ustedes pueden recordar de su infancia. Nuestro objetivo es recrear esta experiencia en un entorno digital, aprovechando las capacidades del lenguaje Java y la estructura MVC para crear un juego interactivo y atractivo.
+# Diagrama de Secuencia
 
-El patrón MVC, que significa Modelo-Vista-Controlador, es una forma de organizar el código de una aplicación para separar las responsabilidades y facilitar su mantenimiento y evolución. En nuestro caso, utilizaremos este patrón para dividir claramente las partes del juego: el modelo se encargará de la lógica y el estado del juego, la vista mostrará la interfaz gráfica al jugador y el controlador manejará las interacciones del usuario.
 
-Estamos emocionados de poner en práctica nuestros conocimientos adquiridos en el curso y aplicarlos a un proyecto real. Además, esta será una excelente oportunidad para mejorar nuestras habilidades de programación y trabajar en equipo.
+```mermaid
+sequenceDiagram
+    participant Leaderboard
+    participant Game
+    participant Juego
+    participant controlerGame
 
-Esperamos crear un juego "3 en Raya" atractivo y divertido que pueda ser disfrutado por todos. Estamos comprometidos a trabajar arduamente y asegurarnos de que el juego sea de alta calidad y brinde una experiencia gratificante.
-
-¡Estén atentos a futuras actualizaciones! Estamos seguros de que tendremos mucho progreso que compartir y esperamos que se unan a nosotros en esta emocionante aventura de desarrollo de juegos.
-
-¡Gracias por su apoyo y nos vemos pronto!
-
-Jorge Usatorre y Cristian Moreira
+    Leaderboard->>+Game: setVisible(true)
+    Game->>+controlerGame: crearInstanciaJuego()
+    controlerGame->>+Juego: crearJuego()
+    Juego->>controlerGame: Juego creado
+    controlerGame->>-Game: Juego creado
+    Game->>-Leaderboard: Game visible
+    Leaderboard->>+Game: esperarJugadas()
+    Game->>+controlerGame: marcarCasilla()
+    controlerGame->>Juego: realizarMovimiento()
+    Juego->>Juego: Actualizar estado
+    Juego->>controlerGame: Movimiento realizado
+    controlerGame->>-Game: Movimiento realizado
+    Game->>Leaderboard: Actualizar interfaz
+    alt
+        Juego-->>Juego: Verificar ganador
+        Juego-->>controlerGame: Ganador encontrado
+        controlerGame->>-Game: Ganador encontrado
+        Game->>-Leaderboard: Ganador encontrado
+    else
+        Juego-->>Juego: Verificar empate
+        Juego-->>controlerGame: Empate encontrado
+        controlerGame->>-Game: Empate encontrado
+        Game->>-Leaderboard: Empate encontrado
+    end
+    Game->>+controlerGame: reiniciarJuego()
+    controlerGame->>Juego: reiniciarJuego()
+    Juego->>Juego: Reiniciar juego
+    Juego->>controlerGame: Juego reiniciado
+    controlerGame->>-Game: Juego reiniciado
+    Game->>-Leaderboard: Juego reiniciado
+```
