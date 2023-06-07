@@ -19,7 +19,7 @@ Esperamos crear un juego "3 en Raya" atractivo y divertido que pueda ser disfrut
 
 Jorge Usatorre y Cristian Moreira
 
-## Diagrama de Flujo
+## Diagrama de Flujo.
 
 ```mermaid
 classDiagram

@@ -12,7 +12,7 @@ public class Conectar {
     Connection conectar;
 
     /**
-     * Establece una conexión a la base de datos "tres_en_raya".
+     * Establece una conexión con la base de datos "tres_en_raya".
      *
      * @return La conexión establecida.
      */
